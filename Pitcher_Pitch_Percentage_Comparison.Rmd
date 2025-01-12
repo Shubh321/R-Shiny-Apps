@@ -1,0 +1,73 @@
+```{r}
+library(shiny)
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+# Load the data
+df_2018_filt <- read_csv("C:/Users/Shubh/Downloads/df_2018_filt.csv", locale = locale(encoding = "UTF-8"))
+df_2018_filt$pitcher_name <- iconv(df_2018_filt$pitcher_name, to = "UTF-8")
+
+top_batters <- read_csv("C:/Users/Shubh/Downloads/top_batters.csv", locale = locale(encoding = "UTF-8"))
+top_batters$batter_name <- iconv(top_batters$batter_name, to = "UTF-8")
+
+# Define UI
+ui <- fluidPage(
+  titlePanel("Baseball Statistics Comparison for the 2018 Season"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      selectizeInput("pitcher1", "Select First Pitcher:", 
+                     choices = unique(df_2018_filt$pitcher_name), selected = unique(df_2018_filt$pitcher_name)[1], 
+                     options = list(maxOptions = 1000)),
+      selectizeInput("pitcher2", "Select Second Pitcher:", 
+                     choices = unique(df_2018_filt$pitcher_name), selected = unique(df_2018_filt$pitcher_name)[2], 
+                     options = list(maxOptions = 1000))
+    ),
+    mainPanel(
+      tableOutput("battersStats"),
+      plotOutput("pitchTypesPlot")
+    )
+  )
+)
+
+# Define server logic
+server <- function(input, output) {
+  # Selected batter stats
+  selected_stats <- reactive({
+    stats <- top_batters %>%
+      filter(batter_name %in% c(input$batter1, input$batter2))
+    
+    # Ensure column renaming only applies to displayed output
+    stats <- stats %>%
+      rename("Batter" = batter_name, 
+             "Average Launch Speed" = avg_launch_speed, 
+             "Average Launch Angle" = avg_launch_angle)
+    
+    stats
+  })
+  
+  output$battersStats <- renderTable({
+    selected_stats()
+  })
+  
+  # Generate the histogram of pitch types for selected pitchers
+  output$pitchTypesPlot <- renderPlot({
+    filtered_df <- df_2018_filt %>%
+      filter(pitcher_name %in% c(input$pitcher1, input$pitcher2)) %>%
+      group_by(pitcher_name, pitch_name) %>%
+      summarise(count = n(), .groups = "drop") %>%
+      group_by(pitcher_name) %>%
+      mutate(percentage = (count / sum(count)) * 100)
+    
+    ggplot(filtered_df, aes(x = pitch_name, y = percentage, fill = pitcher_name)) +
+      geom_bar(stat = "identity", position = "dodge") +
+      labs(x = "Pitch Type", y = "Percentage", fill = "Pitcher Name") +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1)) # Improve readability
+  })
+}
+
+# Run the app
+shinyApp(ui = ui, server = server)
+```
