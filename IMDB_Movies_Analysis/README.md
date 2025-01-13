@@ -2,15 +2,11 @@
 This repository contains a Shiny application that analyzes the IMDB Top 1000 Movies dataset. The app provides an interactive interface to explore movie genres, average IMDB ratings, and the number of votes for movies.
 
 ## Features
-Key Features
-Interactive Filters:
-Minimum Votes Slider: Filter movies based on a minimum number of votes.
+Interactive Filters: Minimum Votes Slider: Filter movies based on a minimum number of votes.
 Top Genres Slider: Display the top genres based on average IMDB ratings.
-Dynamic Outputs:
-A table summarizing the top genres, their average ratings, and the total number of movies.
+Dynamic Outputs: A table summarizing the top genres, their average ratings, and the total number of movies.
 A bar chart visualizing the top genres sorted by average ratings.
-How the App Works
-Backend: Data Handling
+
 ## Dataset:
 The app uses the IMDB Top 1000 Movies dataset (imdb_top_1000.csv).
 It contains information about movie genres, ratings, votes, and other metadata.
