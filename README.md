@@ -43,23 +43,15 @@ This Shiny application provides an interactive comparison of baseball statistics
 
 ## Example Output
 
-![Example Output](image.png)
+There is an example output in the file "Pitcher_Pitch_Percentage_Comparison_App_Output"
 
 ---
 
 ## Files in the Repository
 
-- `app.R`: The main Shiny app code.
+- `Pitcher_Pitch_Percentage_Comparison.Rmd`: The main Shiny app code.
 - `df_2018_filt.csv`: Dataset containing pitch information for the 2018 season.
 - `top_batters.csv`: Dataset containing batting statistics for the 2018 season.
 - `README.md`: This documentation file.
-- `image.png`: Example output of the Shiny app.
+- `Pitcher_Pitch_Percentage_Comparison_App_Output`: Example output of the Shiny app.
 
----
-
-## Installation
-
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/your-username/baseball-stats-comparison.git
-   cd baseball-stats-comparison
