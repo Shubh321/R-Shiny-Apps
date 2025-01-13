@@ -51,7 +51,6 @@ There is an example output in the file "Pitcher_Pitch_Percentage_Comparison_App_
 
 - `Pitcher_Pitch_Percentage_Comparison.Rmd`: The main Shiny app code.
 - `df_2018_filt.csv`: Dataset containing pitch information for the 2018 season.
-- `top_batters.csv`: Dataset containing batting statistics for the 2018 season.
 - `README.md`: This documentation file.
 - `Pitcher_Pitch_Percentage_Comparison_App_Output`: Example output of the Shiny app.
 
